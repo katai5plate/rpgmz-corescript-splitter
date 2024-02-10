@@ -1,3 +1,9 @@
+js/**/*.js
+js/**/*.wasm
+src/
+ts/
+types/
+
 # Logs
 logs
 *.log

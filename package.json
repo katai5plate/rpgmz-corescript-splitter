@@ -1,0 +1,46 @@
+{
+  "name": "rpgmz-corescript-splitter",
+  "version": "1.0.0",
+  "description": "ツクールMZのコアスクリプトをクラスごとに分割し、型定義ファイルを自動生成するバッチ",
+  "main": "index.js",
+  "scripts": {
+    "extract": "node generateSrc.js",
+    "ts": "run-s ts:*",
+    "ts:cls": "rimraf ts types && cpx \"./src/**/*.js\" ts",
+    "ts:es": "lebab --replace ts --transform arrow,arrow-return,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var,let,class,commonjs,template,default-param,includes",
+    "ts:rename": "node ./node_modules/ts-migrate/build/cli.js init ts && node ./node_modules/ts-migrate/build/cli.js rename ts",
+    "ts:make-ts": "node ./tsConverter",
+    "ts:make-dts": "tsc ./index.ts --declaration --emitDeclarationOnly --outDir types --lib DOM,DOM.Iterable,ES6 --target ESNext --moduleResolution Node",
+    "debug-ts": "npm run ts:make-ts -- debug",
+    "debug-ts-cls": "npm run ts:cls && npm run ts:es && npm run ts:rename && npm run ts:make-ts -- debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katai5plate/rpgmz-corescript-diffs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/katai5plate/rpgmz-corescript-diffs/issues"
+  },
+  "homepage": "https://github.com/katai5plate/rpgmz-corescript-diffs#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.13",
+    "cpx": "^1.5.0",
+    "ent": "^2.2.0",
+    "fs-extra": "^9.0.1",
+    "lebab": "^3.1.1",
+    "mve": "^0.1.2",
+    "node-fetch": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.1",
+    "promise-in-order": "0.0.1",
+    "rimraf": "^3.0.2",
+    "ts-migrate": "^0.1.35",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "pixi.js": "5.3.12"
+  }
+}
